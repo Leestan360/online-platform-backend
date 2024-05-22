@@ -18,6 +18,11 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', '') %>
+  database: <%= ENV.fetch('POSTGRES_DB', 'online_platform_backend_development') %>
+  timeout: 5000
 
 development:
   <<: *default
@@ -79,6 +84,7 @@ test:
 #
 production:
   <<: *default
-  database: online_platform_backend_production
-  username: online_platform_backend
-  password: <%= ENV["ONLINE_PLATFORM_BACKEND_DATABASE_PASSWORD"] %>
+  database: <%= ENV.fetch('POSTGRES_DB', 'online_platform_backend_production') %>
+  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', '') %>
